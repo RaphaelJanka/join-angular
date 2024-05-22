@@ -1,0 +1,155 @@
+<div class="px-4 pl-5">
+  <h1>Add Task</h1>
+  <div>
+    <form [formGroup]="taskCreationForm" class="flex flex-column gap-6">
+      <div class="formgrid grid justify-content-between gap-5 px-2">
+        <div class="p-fluid flex flex-column gap-5">
+          <div class="flex flex-column gap-2">
+            <p-floatLabel>
+              <input
+                pInputText
+                id="title"
+                aria-describedby="title-help"
+                formControlName="title"
+              />
+              <label for="title">Title</label>
+            </p-floatLabel>
+            <small id="title-help">
+              <span
+                *ngIf="
+                  !taskCreationForm.get('title')?.valid &&
+                  taskCreationForm.get('title')?.dirty
+                "
+                >Enter your title.</span
+              ></small
+            >
+          </div>
+          <div class="flex flex-column gap-2">
+            <p-floatLabel>
+              <textarea
+                rows="5"
+                cols="30"
+                pInputTextarea
+                formControlName="description"
+                [autoResize]="true"
+                id="description"
+              >
+              </textarea>
+              <label for="description">Description</label>
+            </p-floatLabel>
+            <small>
+              <span
+                *ngIf="
+                  !taskCreationForm.get('description')?.valid &&
+                  taskCreationForm.get('description')?.dirty
+                "
+                >Enter your description.</span
+              >
+            </small>
+          </div>
+          <div class="flex flex-column gap-2">
+            <p-floatLabel>
+              <p-multiSelect
+                inputId="userSelection"
+                id="select"
+                [options]="users"
+                display="chip"
+                optionLabel="name"
+                formControlName="selectedUsers"
+              />
+              <label for="userSelection">Assigned to</label>
+            </p-floatLabel>
+            <small>
+              <span
+                *ngIf="
+                  !taskCreationForm.get('selectedUsers')?.valid &&
+                  taskCreationForm.get('selectedUsers')?.dirty
+                "
+                >Select your contacts.</span
+              >
+            </small>
+          </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="flex flex-column gap-5">
+          <div class="flex flex-column gap-2">
+            <p-floatLabel>
+              <p-calendar
+                [showIcon]="true"
+                [showOnFocus]="false"
+                inputId="date"
+                aria-describedby="date-help"
+                formControlName="date"
+                dateFormat="dd.mm.yy"
+                [touchUI]="true"
+              />
+              <label for="date">Due date</label>
+            </p-floatLabel>
+            <small id="date-help">
+              <span
+                *ngIf="
+                  !taskCreationForm.get('date')?.valid &&
+                  taskCreationForm.get('date')?.dirty
+                "
+                >Enter your date.</span
+              >
+            </small>
+          </div>
+          <div class="flex flex-column gap-2 align-items-center">
+            <p-selectButton
+              [options]="priorityOptions"
+              formControlName="priority"
+              optionLabel="priority"
+              optionValue="value"
+              aria-describedby="priority-help"
+            />
+            <small id="priority-help">
+              <span
+                *ngIf="
+                  !taskCreationForm.get('priority')?.valid &&
+                  taskCreationForm.get('priority')?.dirty
+                "
+                >Select the priority status.</span
+              >
+            </small>
+          </div>
+          <div class="flex flex-column gap-2 p-fluid">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="categories"
+                optionLabel="name"
+                formControlName="category"
+                inputId="dropDown"
+                aria-describedby="category-help"
+              />
+              <label>Category</label>
+            </p-floatLabel>
+            <small id="category-help">
+              <span
+                *ngIf="
+                  !taskCreationForm.get('category')?.valid &&
+                  taskCreationForm.get('category')?.dirty
+                "
+                >Select a category.</span
+              >
+            </small>
+          </div>
+          <div class="flex flex-column gap-2">
+            <p-floatLabel>
+              <p-chips formControlName="subtasks" [max]="5"/>
+              <label>Subtasks</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-content-end"> 
+        <div class="flex justify-content-between gap-4">
+            <p-button label="Clear" [outlined]="true" severity="danger" type="button" icon="pi pi-times" class="custom-button-width " />
+            <p-button label="Submit" icon="pi pi-check" type="Submit" (onClick)="onSubmit()"/>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

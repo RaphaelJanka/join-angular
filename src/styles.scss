@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+body {
+    margin: 0;
+}
+
+div[aria-labelledby='Low'].p-ripple.p-element.p-button.p-component.p-highlight {
+    background-color: #7AE229 !important;
+    border-color: #7AE229 !important; /* optional, um den Rahmen ebenfalls anzupassen */
+    // color: white !important; /* optional, um die Textfarbe anzupassen */
+}
+
+div[aria-labelledby='Medium'].p-ripple.p-element.p-button.p-component.p-highlight {
+    background-color: #FFA800 !important;
+    border-color: #FFA800 !important; /* optional, um den Rahmen ebenfalls anzupassen */
+    // color: white !important; /* optional, um die Textfarbe anzupassen */
+}
+
+div[aria-labelledby='Urgent'].p-ripple.p-element.p-button.p-component.p-highlight {
+    background-color: #FF3D00 !important;
+    border-color: #FF3D00 !important;
+    
+}
+
+.p-chips .p-chips-multiple-container {
+    width: 300px !important;
+}
