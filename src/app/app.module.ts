@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,17 +18,33 @@ import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipsModule } from 'primeng/chips';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
+import { LoginComponent } from './login/login.component';
+import { BoardComponent } from './board/board.component';
+import { ContactsComponent } from './contacts/contacts.component';
+import { SummaryComponent } from './summary/summary.component';
+import { DividerModule } from 'primeng/divider';
+import { TooltipModule } from 'primeng/tooltip';
+import { SignUpComponent } from './login/sign-up/sign-up.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AddTaskComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    LoginComponent,
+    BoardComponent,
+    ContactsComponent,
+    SummaryComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SidebarModule,
     ButtonModule,
     InputTextModule,
     ReactiveFormsModule,
@@ -38,10 +55,14 @@ import { ChipsModule } from 'primeng/chips';
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
-    ChipsModule
+    ChipsModule,
+    AvatarModule,
+    MenuModule,
+    DividerModule,
+    TooltipModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
   ],
   bootstrap: [AppComponent]
 })

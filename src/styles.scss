@@ -2,28 +2,80 @@
 @import "primeng/resources/primeng.css";
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
+
 body {
     margin: 0;
 }
 
+.frame {
+    margin-top: 84px;
+}
+
+// ____________________________________  sidebar  ___________________________________________
+
+.p-sidebar .p-sidebar-content {
+    padding: 0 !important;
+}
+
+// -------------- link menu -----------------------------
+
+.p-submenu-header {
+    display: none;
+}
+
+// .p-menu ul {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+// }
+
+.p-menuitem-text {
+    color: white !important;
+}
+
+
+.p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+    background: #142a4d !important;
+}
+
+
+.p-menuitem-content:hover {
+    background: #142a4d !important;
+}
+
+// ------------------------------------------------------
+
+// __________________________________________________________________________________________
+
+
+// ___________________________________  addTask  ____________________________________________
+
+
+// -------------  priority buttons ------------------
+
 div[aria-labelledby='Low'].p-ripple.p-element.p-button.p-component.p-highlight {
     background-color: #7AE229 !important;
-    border-color: #7AE229 !important; /* optional, um den Rahmen ebenfalls anzupassen */
-    // color: white !important; /* optional, um die Textfarbe anzupassen */
+    border-color: #7AE229 !important; 
 }
 
 div[aria-labelledby='Medium'].p-ripple.p-element.p-button.p-component.p-highlight {
     background-color: #FFA800 !important;
-    border-color: #FFA800 !important; /* optional, um den Rahmen ebenfalls anzupassen */
-    // color: white !important; /* optional, um die Textfarbe anzupassen */
+    border-color: #FFA800 !important; 
 }
 
 div[aria-labelledby='Urgent'].p-ripple.p-element.p-button.p-component.p-highlight {
     background-color: #FF3D00 !important;
     border-color: #FF3D00 !important;
-    
 }
+// --------------------------------------------------
 
 .p-chips .p-chips-multiple-container {
-    width: 300px !important;
+    max-width: 291px !important;
+    width: 100%;
 }
+.p-chips {
+    width: 100%;
+}
+
+
+// __________________________________________________________________________________________

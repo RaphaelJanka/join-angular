@@ -1,5 +1,6 @@
 h1 {
     font-size: 48px;
+    margin-top: 0;
 }
 
 textarea {
@@ -13,11 +14,12 @@ small {
 
 .separator {
     width: 1px;
+    height: 300px;
     background: grey;
 }
 
-form {
-    max-width: 800px;
-}
+
+
+
 
 

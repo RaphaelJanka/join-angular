@@ -1,5 +1,2 @@
-<app-header></app-header>
-<app-sidebar></app-sidebar>
-<div class="frame">
-  <app-add-task></app-add-task>
-</div>
+<app-header *ngIf="isHeaderVisible"></app-header>
+<div class="frame mx-6 p-3"><router-outlet ></router-outlet></div>
