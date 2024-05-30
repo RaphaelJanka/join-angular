@@ -4,23 +4,42 @@
 @import "primeicons/primeicons.css";
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .frame {
-    margin-top: 84px;
+  padding-top: 112px;
+}
+
+h1 {
+  font-size: 48px;
+  margin-top: 0;
+}
+
+.custom-button .p-button {
+  background: red;
+  border: 1px solid red;
+}
+
+.custom-button .p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px red, 0 1px 2px 0 black;
+}
+
+.custom-button .p-button:not(:disabled):hover {
+  background: rgb(176, 0, 0);
+  border-color: rgb(176, 0, 0);
 }
 
 // ____________________________________  sidebar  ___________________________________________
 
 .p-sidebar .p-sidebar-content {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 // -------------- link menu -----------------------------
 
 .p-submenu-header {
-    display: none;
+  display: none;
 }
 
 // .p-menu ul {
@@ -30,52 +49,53 @@ body {
 // }
 
 .p-menuitem-text {
-    color: white !important;
+  color: white !important;
 }
 
-
-.p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
-    background: #142a4d !important;
+.p-menu
+  .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+  > .p-menuitem-content {
+  background: #142a4d !important;
 }
-
 
 .p-menuitem-content:hover {
-    background: #142a4d !important;
+  background: #142a4d !important;
 }
 
 // ------------------------------------------------------
 
 // __________________________________________________________________________________________
 
-
 // ___________________________________  addTask  ____________________________________________
-
 
 // -------------  priority buttons ------------------
 
-div[aria-labelledby='Low'].p-ripple.p-element.p-button.p-component.p-highlight {
-    background-color: #7AE229 !important;
-    border-color: #7AE229 !important; 
+div[aria-labelledby="Low"].p-ripple.p-element.p-button.p-component.p-highlight {
+  background-color: #7ae229 !important;
+  border-color: #7ae229 !important;
 }
 
-div[aria-labelledby='Medium'].p-ripple.p-element.p-button.p-component.p-highlight {
-    background-color: #FFA800 !important;
-    border-color: #FFA800 !important; 
+div[aria-labelledby="Medium"].p-ripple.p-element.p-button.p-component.p-highlight {
+  background-color: #ffa800 !important;
+  border-color: #ffa800 !important;
 }
 
-div[aria-labelledby='Urgent'].p-ripple.p-element.p-button.p-component.p-highlight {
-    background-color: #FF3D00 !important;
-    border-color: #FF3D00 !important;
+div[aria-labelledby="Urgent"].p-ripple.p-element.p-button.p-component.p-highlight {
+  background-color: #ff3d00 !important;
+  border-color: #ff3d00 !important;
 }
 // --------------------------------------------------
 
 .p-chips .p-chips-multiple-container {
-    max-width: 291px !important;
-    width: 100%;
+  max-width: 291px !important;
+  width: 100%;
 }
 .p-chips {
-    width: 100%;
+  width: 100%;
 }
+
+
+
 
 
 // __________________________________________________________________________________________

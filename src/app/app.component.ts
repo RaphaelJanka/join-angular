@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { AuthService } from './login/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isHeaderVisible: boolean = true;
   routerSubscription!: Subscription;
 
-  constructor(private primengConfig: PrimeNGConfig, public router: Router) {}
+  constructor(private primengConfig: PrimeNGConfig, public router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -26,7 +27,9 @@ export class AppComponent implements OnInit, OnDestroy {
           currentRoute.includes('login') || currentRoute.includes('signup')
         );
       });
+      this.authService.autoLogin();
   }
+  
 
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe();

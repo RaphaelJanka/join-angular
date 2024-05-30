@@ -1,3 +1,154 @@
-<p>sign-up works!</p>
+<div class="w-screen h-screen flex b-4">
+  <div *ngIf="errorMessage" class="card">
+    <p-messages 
+        [(value)]="errorMessage" 
+        [enableService]="false" 
+        [closable]="false" />
+  </div>
+  <div
+    class="flex flex-grow-1 justify-content-center align-items-center"
+    *ngIf="authService.isLoading"
+  >
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div
+    class="gap-5 m-auto shadow-4 border-round-3xl flex-grow-1 max-w-30rem pt-3 pb-5 px-4"
+    *ngIf="!authService.isLoading"
+  >
+    <div class="flex justify-content-center align-items-center mb-4">
+      <span class="text-6xl font-medium">Sign Up</span>
+    </div>
 
-<p-button routerLink="/login">Back</p-button>
+    <form
+      [formGroup]="signUpForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-column gap-4 px-6"
+    >
+      <div class="p-fluid">
+        <p-iconField iconPosition="right">
+          <p-floatLabel>
+            <p-inputIcon styleClass="pi pi-user" />
+            <input
+              type="text"
+              pInputText
+              formControlName="firstname"
+              id="firstname"
+            />
+            <label for="firstname">Firstname</label>
+          </p-floatLabel>
+        </p-iconField>
+        <div class="text-center text-xs text-red-600 mt-1">
+          <small
+            *ngIf="
+              !signUpForm.get('firstname')?.valid &&
+              signUpForm.get('firstname')?.dirty
+            "
+            >Enter your firstname</small
+          >
+        </div>
+      </div>
+
+      <div class="p-fluid">
+        <p-iconField iconPosition="right">
+          <p-floatLabel>
+            <p-inputIcon styleClass="pi pi-user" />
+            <input
+              type="text"
+              pInputText
+              formControlName="lastname"
+              id="lastname"
+            />
+            <label for="lastname">Lastname</label>
+          </p-floatLabel>
+        </p-iconField>
+        <div class="text-center text-xs text-red-600 mt-1">
+          <small
+            *ngIf="
+              !signUpForm.get('lastname')?.valid &&
+              signUpForm.get('lastname')?.dirty
+            "
+            >Enter your lastname</small
+          >
+        </div>
+      </div>
+
+      <div class="p-fluid">
+        <p-iconField iconPosition="right">
+          <p-floatLabel>
+            <p-inputIcon styleClass="pi pi-envelope" />
+            <input type="email" pInputText formControlName="email" id="email" />
+            <label for="email">E-mail</label>
+          </p-floatLabel>
+        </p-iconField>
+        <div class="text-center text-xs text-red-600 mt-1">
+          <small
+            *ngIf="
+              !signUpForm.get('email')?.valid && signUpForm.get('email')?.dirty
+            "
+            >Enter your valid email</small
+          >
+        </div>
+      </div>
+      <div class="p-fluid">
+        <p-floatLabel>
+          <p-password
+            [toggleMask]="true"
+            formControlName="password"
+            inputId="password"
+            pTooltip="At least 8 characters"
+            tooltipPosition="top"
+            promptLabel="Choose a password"
+            weakLabel="Too simple"
+            mediumLabel="Average complexity"
+            strongLabel="Complex password"
+          ></p-password>
+          <label for="password">Password</label>
+        </p-floatLabel>
+        <div class="text-center text-xs text-red-600 mt-1">
+          <small
+            *ngIf="
+              !signUpForm.get('password')?.valid &&
+              signUpForm.get('password')?.dirty
+            "
+            >Enter your password</small
+          >
+        </div>
+      </div>
+
+      <div class="p-fluid">
+        <p-floatLabel>
+          <p-password
+            [feedback]="false"
+            [toggleMask]="true"
+            formControlName="passwordMatch"
+            inputId="passwordMatch"
+          ></p-password>
+          <label for="passwordMatch">Password</label>
+        </p-floatLabel>
+
+        <div class="text-center text-xs text-red-600 mt-1">
+          <small
+            *ngIf="
+              signUpForm.get('passwordMatch')?.hasError('passwordMismatch') &&
+              signUpForm.get('passwordMatch')?.dirty
+            "
+          >
+            Password does not match
+          </small>
+        </div>
+      </div>
+      <div class="flex justify-content-around align-items-center">
+        <p-button [disabled]="!signUpForm.valid" type="submit" [raised]="true">
+          Sign Up
+        </p-button>
+        <p-button
+          type="button"
+          routerLink="/login"
+          [raised]="true"
+          [outlined]="true"
+          >Back to Login</p-button
+        >
+      </div>
+    </form>
+  </div>
+</div>

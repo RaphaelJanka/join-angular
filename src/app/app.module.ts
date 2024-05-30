@@ -9,7 +9,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -27,6 +27,20 @@ import { SummaryComponent } from './summary/summary.component';
 import { DividerModule } from 'primeng/divider';
 import { TooltipModule } from 'primeng/tooltip';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { CardModule } from 'primeng/card';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { PasswordModule } from 'primeng/password';
+import { CheckboxModule } from 'primeng/checkbox';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { MessagesModule } from 'primeng/messages';
+import { CapitalizePipe } from './shared/capitalize.pipe';
+import { DragDropModule } from 'primeng/dragdrop';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+
+
 
 
 @NgModule({
@@ -39,7 +53,10 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
     BoardComponent,
     ContactsComponent,
     SummaryComponent,
-    SignUpComponent
+    SignUpComponent,
+    PageNotFoundComponent,
+    LoadingSpinnerComponent,
+    CapitalizePipe
   ],
   imports: [
     BrowserModule,
@@ -59,10 +76,22 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
     AvatarModule,
     MenuModule,
     DividerModule,
-    TooltipModule
+    TooltipModule,
+    CardModule,
+    IconFieldModule,
+    InputIconModule,
+    PasswordModule,
+    CheckboxModule,
+    FormsModule,
+    HttpClientModule,
+    MessagesModule,
+    DragDropModule,
+    OverlayPanelModule
+ 
   ],
   providers: [
     provideClientHydration(),
+    provideHttpClient(withFetch()) 
   ],
   bootstrap: [AppComponent]
 })

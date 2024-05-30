@@ -1,1 +1,26 @@
-<p>board works!</p>
+<div class="frame mx-6 px-3 h-screen">
+  <h1>Board</h1>
+  <div class="m-auto flex flex-wrap justify-content-between gap-6">
+    <div *ngFor="let column of boardColumns">
+      <h3>{{ column.name }}</h3>
+      <div
+        class="p-2 border-1 surface-border border-round w-15rem"
+        id="{{ column.id }}"
+        pDroppable
+        (onDrop)="drop(column.id)"
+      >
+        <ul class="list-none flex flex-column gap-2 p-0 m-0">
+          <li
+            *ngFor="let task of column.tasks"
+            class="p-2 border-round shadow-1"
+            pDraggable
+            (onDragStart)="dragStart(task)"
+            (onDragEnd)="dragEnd()"
+          >
+            {{ task.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
