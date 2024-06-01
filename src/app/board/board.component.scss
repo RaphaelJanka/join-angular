@@ -1,5 +1,18 @@
 :host ::ng-deep {
     [pDraggable] {
-        cursor: move;
+        cursor: pointer;
     }
 }
+
+.board-column {
+    min-height: 50vh !important;
+}
+
+.pBar-width {
+    width: 144px;
+}
+
+.task-title {
+    word-break: break-all;
+}
+

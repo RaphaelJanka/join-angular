@@ -1,26 +1,49 @@
-<div class="frame mx-6 px-3 h-screen">
+<div class="frame mx-6 px-3 pb-4">
   <h1>Board</h1>
   <div class="m-auto flex flex-wrap justify-content-between gap-6">
     <div *ngFor="let column of boardColumns">
       <h3>{{ column.name }}</h3>
       <div
-        class="p-2 border-1 surface-border border-round w-15rem"
+        class="p-2 border-1 surface-border border-round w-15rem board-column"
         id="{{ column.id }}"
         pDroppable
         (onDrop)="drop(column.id)"
       >
-        <ul class="list-none flex flex-column gap-2 p-0 m-0">
-          <li
+        <div *ngIf="column.tasks.length < 1" class="border-round shadow-1 p-2">
+          No tasks available
+        </div>
+        <div *ngIf="column.tasks.length > 0" class="flex flex-column gap-3">
+          <app-task-card
             *ngFor="let task of column.tasks"
-            class="p-2 border-round shadow-1"
+            [task]="task"
             pDraggable
             (onDragStart)="dragStart(task)"
             (onDragEnd)="dragEnd()"
-          >
-            {{ task.title }}
-          </li>
-        </ul>
+            (click)="showDialog(task)"
+            class="w-full"
+          ></app-task-card>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<p-dialog
+  header="Header"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem' }"
+  [dismissableMask]="true"
+  id="dialogBoard"
+  (onHide)="closeDialog()"
+>
+  <ng-template pTemplate="header">
+    <div
+      [style]="{ 'background-color': selectedTaskCategory.color }"
+      class="p-2 border-round shadow-1 text-white"
+    >
+      {{ selectedTaskCategory.name }}
+    </div>
+  </ng-template>
+  <router-outlet></router-outlet>
+</p-dialog>

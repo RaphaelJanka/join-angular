@@ -1,0 +1,65 @@
+<div *ngIf="task" class="w-full h-full">
+  <div *ngIf="!isEdited" class="w-full flex flex-column gap-4">
+    <h2>{{ task.title }}</h2>
+    <span> {{ task.description }}</span>
+    <span>Due date: {{ task.date | date }}</span>
+    <div class="flex">
+      <span>Priority:</span>
+      <div
+        *ngIf="task.priority === 'urgent'"
+        class="flex align-items-center gap-1"
+      >
+        <i class="pi pi-angle-double-up" style="color: #ff3d00"></i>
+        <span>{{ task.priority }}</span>
+      </div>
+      <div
+        *ngIf="task.priority === 'medium'"
+        class="flex align-items-center gap-1"
+      >
+        <i class="pi pi-equal" style="color: #ffa800"></i>
+        <span>{{ task.priority }}</span>
+      </div>
+      <div
+        *ngIf="task.priority === 'low'"
+        class="flex align-items-center gap-1"
+      >
+        <i class="pi pi-angle-double-down" style="color: #7ae229"></i>
+        <span>{{ task.priority }}</span>
+      </div>
+    </div>
+    <span>Assigned to:</span>
+    <div class="flex flex-column gap-3">
+      <div
+        *ngFor="let user of task.selectedUsers"
+        class="flex align-items-center gap-2"
+      >
+        <p-avatar
+          [style]="{
+            'background-color': user.avatarColor,
+            color: 'white'
+          }"
+          [label]="user.name | capitalize"
+          shape="circle"
+        />
+        {{ user.name }}
+      </div>
+    </div>
+    <span>Subtasks:</span>
+    <div class="flex flex-column gap-2">
+      <div *ngFor="let subtask of task.subtasks" class="field-checkbox">
+        <p-checkbox
+          [(ngModel)]="checkedSubtasks"
+          name="group"
+          [label]="subtask"
+          [value]="subtask"
+        />
+      </div>
+    </div>
+    <div class="flex justify-content-end">
+      <p-button (onClick)="onEdit()">Edit</p-button>
+    </div>
+  </div>
+  <div *ngIf="isEdited" class="w-full">
+    <router-outlet></router-outlet>
+  </div>
+</div>

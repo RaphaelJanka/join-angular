@@ -65,9 +65,7 @@
               <ng-template let-user pTemplate="item">
                 <div class="flex align-items-center gap-2">
                   <p-avatar
-                    [label]="
-                      (user.name | capitalize)
-                    "
+                    [label]="user.name | capitalize"
                     [style]="{
                       'background-color': user.avatarColor,
                       color: '#1a2551'
@@ -77,7 +75,7 @@
                   <span>{{ user.name }}</span>
                 </div>
               </ng-template>
-              
+
               <ng-template pTemplate="dropdownicon">
                 <i
                   *ngIf="!isMultiSelectExpanded"
@@ -134,7 +132,10 @@
             optionLabel="priority"
             optionValue="value"
             aria-describedby="priority-help"
-          />
+          ></p-selectButton>
+          <ng-template let-item pTemplate>
+            <i [class]="item.icon"></i>
+          </ng-template>
           <small id="priority-help">
             <span
               *ngIf="

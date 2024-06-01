@@ -1,0 +1,72 @@
+<div class="flex flex-column border-round shadow-1 p-2 gap-4 bg-blue-100">
+  <div class="flex">
+    <div
+      [style]="{ 'background-color': task.category.color }"
+      class="p-2 border-round shadow-1 text-white"
+    >
+      {{ task.category.name }}
+    </div>
+  </div>
+
+  <h3 class="m-0 task-title">{{ task.title }}</h3>
+  <span>{{ task.description }}</span>
+  <div class="flex align-items-center gap-3 text-xs">
+    <span>0 / {{ task.subtasks?.length }}</span>
+    <div class="card pBar-width">
+      <p-progressBar [style]="{ height: '10px' }" [value]="50">
+        <ng-template pTemplate="content" let-value>
+          <span class="text-xs">{{ value }}/{{ task.subtasks?.length }}</span>
+        </ng-template>
+      </p-progressBar>
+    </div>
+  </div>
+  <div class="flex justify-content-between align-items-center">
+    <p-avatarGroup *ngIf="task.selectedUsers">
+      <ng-container *ngIf="task.selectedUsers.length > 2">
+        <p-avatar
+          *ngFor="let user of task.selectedUsers.slice(0, 2)"
+          [style]="{
+            'background-color': user.avatarColor,
+            color: 'white'
+          }"
+          [label]="user.name | capitalize"
+          shape="circle"
+        ></p-avatar>
+        <p-avatar
+          [style]="{ 'background-color': '#ccc', color: 'white' }"
+          [label]="'+' + (task.selectedUsers.length - 2)"
+          shape="circle"
+        ></p-avatar>
+      </ng-container>
+      <ng-container *ngIf="task.selectedUsers.length <= 2">
+        <p-avatar
+          *ngFor="let user of task.selectedUsers"
+          [style]="{
+            'background-color': user.avatarColor,
+            color: 'white'
+          }"
+          [label]="user.name | capitalize"
+          shape="circle"
+        ></p-avatar>
+      </ng-container>
+    </p-avatarGroup>
+    <p-avatar
+      *ngIf="task.priority === 'urgent'"
+      icon="pi pi-angle-double-up"
+      shape="circle"
+      [style]="{ 'background-color': '#ff3d00', color: 'white' }"
+    />
+    <p-avatar
+      *ngIf="task.priority === 'medium'"
+      icon="pi pi-equal"
+      shape="circle"
+      [style]="{ 'background-color': '#ffa800', color: 'white' }"
+    />
+    <p-avatar
+      *ngIf="task.priority === 'low'"
+      icon="pi pi-angle-double-down"
+      shape="circle"
+      [style]="{ 'background-color': '#7ae229', color: 'white' }"
+    />
+  </div>
+</div>

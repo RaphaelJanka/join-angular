@@ -19,6 +19,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipsModule } from 'primeng/chips';
 import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MenuModule } from 'primeng/menu';
 import { LoginComponent } from './login/login.component';
 import { BoardComponent } from './board/board.component';
@@ -39,6 +40,13 @@ import { MessagesModule } from 'primeng/messages';
 import { CapitalizePipe } from './shared/capitalize.pipe';
 import { DragDropModule } from 'primeng/dragdrop';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { Dialog, DialogModule } from 'primeng/dialog';
+import { TaskDetailsComponent } from './board/task-details/task-details.component';
+import { TaskCardComponent } from './board/task-card/task-card.component';
+import { PanelModule } from 'primeng/panel';
+import { TaskEditComponent } from './board/task-edit/task-edit.component';
 
 
 
@@ -56,7 +64,10 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     SignUpComponent,
     PageNotFoundComponent,
     LoadingSpinnerComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    TaskDetailsComponent,
+    TaskCardComponent,
+    TaskEditComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +85,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DropdownModule,
     ChipsModule,
     AvatarModule,
+    AvatarGroupModule,
     MenuModule,
     DividerModule,
     TooltipModule,
@@ -86,7 +98,11 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     HttpClientModule,
     MessagesModule,
     DragDropModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ProgressBarModule,
+    ToastModule,
+    DialogModule,
+    PanelModule
  
   ],
   providers: [

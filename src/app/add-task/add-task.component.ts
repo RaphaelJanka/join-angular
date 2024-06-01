@@ -9,6 +9,7 @@ import { Subscription, take } from 'rxjs';
 
 export interface Category {
   name: string;
+  color: string;
 }
 
 @Component({
@@ -20,23 +21,23 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   taskCreationForm!: FormGroup;
   isMultiSelectExpanded: boolean = false;
   isDropdownExpanded: boolean = false;
+  isPriorityClicked: boolean = false;
   users: User[] = [];
   selectedUsers: User[] = [];
   priorityOptions: any[] | undefined = [
-    { priority: 'Urgent', value: 'urgent' },
-    { priority: 'Medium', value: 'medium' },
-    { priority: 'Low', value: 'low' },
+    { priority: 'Urgent', value: 'urgent', icon: 'pi pi-angle-double-up' },
+    { priority: 'Medium', value: 'medium', icon: 'pi pi-equals' },
+    { priority: 'Low', value: 'low', icon: 'pi pi-angle-double-down' },
   ];
   categories: Category[] | undefined = [
-    { name: 'Technical Task' },
-    { name: 'User Story' },
+    { name: 'Technical Task', color: '#66E4A1' },
+    { name: 'User Story', color: '#1234A8' },
   ];
   selectedSubtasks: string[] = [];
   minDate!: Date;
   userSub: Subscription | undefined;
 
   constructor(
-    private route: ActivatedRoute,
     private authService: AuthService,
     private taskService: TaskService
   ) {}
@@ -55,7 +56,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       category: new FormControl(null, [Validators.required]),
       subtasks: new FormControl<string[] | null>(null),
     });
-    console.log('date', new Date());
   }
 
   fetchUsers() {
@@ -80,6 +80,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     if (name === 'contacts') {
       this.isMultiSelectExpanded = !this.isMultiSelectExpanded;
     }
+  }
+
+  switchIconColors() {
+    this.isPriorityClicked = !this.isPriorityClicked;
+    console.log('check');
+    
   }
 
   onSubmit() {
