@@ -1,8 +1,9 @@
 <div
-  class="shadow-2 bg-blue-900 flex flex-column justify-content-between h-full py-4"
+  class="shadow-2 flex flex-column justify-content-between h-full py-4"
+  [style]="{'background-image': 'linear-gradient(to bottom, var(--bluegray-500), var(--bluegray-800))'}"
 >
   <div class="card flex justify-content-center gap-2">
-    <p-menu [model]="items" styleClass="border-none bg-blue-900">
+    <p-menu #sideBarMenu [model]="items" styleClass="border-none">
       <ng-template pTemplate="item" let-item>
         <ng-container>
           <a

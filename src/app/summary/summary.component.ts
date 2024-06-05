@@ -7,10 +7,19 @@ import { AuthService } from '../login/auth.service';
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent implements OnInit{
+date!: Date;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+
+    console.log(new Date());
+    
+    
+  }
+
+  checkDate() {
+    console.log('Date', this.date);
     
   }
 }

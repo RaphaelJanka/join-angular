@@ -42,11 +42,13 @@ import { DragDropModule } from 'primeng/dragdrop';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { Dialog, DialogModule } from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
 import { TaskDetailsComponent } from './board/task-details/task-details.component';
 import { TaskCardComponent } from './board/task-card/task-card.component';
 import { PanelModule } from 'primeng/panel';
 import { TaskEditComponent } from './board/task-edit/task-edit.component';
+import { TaskFormComponent } from './shared/task-form/task-form.component';
+
 
 
 
@@ -67,7 +69,8 @@ import { TaskEditComponent } from './board/task-edit/task-edit.component';
     CapitalizePipe,
     TaskDetailsComponent,
     TaskCardComponent,
-    TaskEditComponent
+    TaskEditComponent,
+    TaskFormComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,8 @@ import { TaskEditComponent } from './board/task-edit/task-edit.component';
     ProgressBarModule,
     ToastModule,
     DialogModule,
-    PanelModule
+    PanelModule,
+    FormsModule
  
   ],
   providers: [

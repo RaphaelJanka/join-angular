@@ -35,6 +35,12 @@ h1 {
 .p-sidebar .p-sidebar-content {
   padding: 0 !important;
 }
+.p-sidebar .p-sidebar-header {
+  background: var(--bluegray-500);
+}
+.p-menu {
+  background: rgba(255, 255, 255, 0);
+}
 
 // -------------- link menu -----------------------------
 
@@ -102,6 +108,9 @@ div[aria-labelledby="Urgent"].p-ripple.p-element.p-button.p-component.p-highligh
 
 #dialogBoard .p-dialog-content::-webkit-scrollbar {
   display: none;
+}
+.p-component-overlay {
+  z-index: 1090 !important;
 }
 
 //___________________________________________________________________________________________________

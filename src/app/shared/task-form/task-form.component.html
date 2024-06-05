@@ -1,0 +1,223 @@
+<form
+  [formGroup]="taskForm"
+  [ngClass]="
+    editMode
+      ? 'formgrid justify-content-center align-items-center gap-5'
+      : 'formgrid grid md:justify-content-between justify-content-center gap-5'
+  "
+>
+  <div class=" p-fluid flex flex-column gap-5 sm:width-col">
+    <div class="flex flex-column gap-2">
+      <p-floatLabel>
+        <input
+          pInputText
+          id="title"
+          aria-describedby="title-help"
+          formControlName="title"
+        />
+        <label for="title">Title</label>
+      </p-floatLabel>
+      <small id="title-help">
+        <span
+          *ngIf="!taskForm.get('title')?.valid && taskForm.get('title')?.dirty"
+          >Enter your title.</span
+        ></small
+      >
+    </div>
+    <div class="flex flex-column gap-2">
+      <p-floatLabel>
+        <textarea
+          rows="5"
+          cols="30"
+          pInputTextarea
+          formControlName="description"
+          [autoResize]="true"
+          id="description"
+        >
+        </textarea>
+        <label for="description">Description</label>
+      </p-floatLabel>
+      <small>
+        <span
+          *ngIf="
+            !taskForm.get('description')?.valid &&
+            taskForm.get('description')?.dirty
+          "
+          >Enter your description.</span
+        >
+      </small>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <p-floatLabel>
+        <p-multiSelect
+          inputId="userSelection"
+          id="select"
+          [options]="users"
+          display="chip"
+          optionLabel="name"
+          formControlName="selectedUsers"
+          (onPanelShow)="toggleIcons('contacts')"
+          (onPanelHide)="toggleIcons('contacts')"
+        >
+          <ng-template let-user pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <p-avatar
+                [label]="user.name | capitalize"
+                [style]="{
+                  'background-color': user.avatarColor,
+                  color: '#1a2551'
+                }"
+                shape="circle"
+              />
+              <span>{{ user.name }}</span>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="dropdownicon">
+            <i *ngIf="!isMultiSelectExpanded" class="pi pi-chevron-down"></i>
+            <i *ngIf="isMultiSelectExpanded" class="pi pi-chevron-up"></i>
+          </ng-template>
+        </p-multiSelect>
+        <label for="userSelection">Assigned to</label>
+      </p-floatLabel>
+      <small>
+        <span
+          *ngIf="
+            !taskForm.get('selectedUsers')?.valid &&
+            taskForm.get('selectedUsers')?.dirty
+          "
+          >Select your contacts.</span
+        >
+      </small>
+    </div>
+  </div>
+
+  <div class="flex flex-column gap-5">
+    <div class="flex flex-column gap-2">
+      <p-floatLabel>
+        <p-calendar
+        [showIcon]="true"
+        [showOnFocus]="false"
+        inputId="date"
+        aria-describedby="date-help"
+        dateFormat="dd.mm.yy"
+        formControlName="date"
+        [touchUI]="true"
+        [minDate]="minDate"
+        >
+        
+      </p-calendar>
+        <label for="date">Due date</label>
+      </p-floatLabel>
+      <small id="date-help">
+        <span
+          *ngIf="!taskForm.get('date')?.valid && taskForm.get('date')?.dirty"
+          >Enter your date.</span
+        >
+      </small>
+    </div>
+    <div class="flex flex-column gap-2 align-items-center">
+      <p-selectButton
+        [options]="priorityOptions"
+        formControlName="priority"
+        optionLabel="priority"
+        optionValue="value"
+        aria-describedby="priority-help"
+      ></p-selectButton>
+      <ng-template let-item pTemplate>
+        <i [class]="item.icon"></i>
+      </ng-template>
+      <small id="priority-help">
+        <span
+          *ngIf="
+            !taskForm.get('priority')?.valid && taskForm.get('priority')?.dirty
+          "
+          >Select the priority status.</span
+        >
+      </small>
+    </div>
+    <div class="flex flex-column gap-2">
+      <p-floatLabel>
+        <p-dropdown
+          [options]="categories"
+          optionLabel="name"
+          formControlName="category"
+          inputId="dropDown"
+          aria-describedby="category-help"
+          (onShow)="toggleIcons('category')"
+          (onHide)="toggleIcons('category')"
+        >
+          <ng-template pTemplate="dropdownicon">
+            <i *ngIf="!isDropdownExpanded" class="pi pi-chevron-down"></i>
+            <i *ngIf="isDropdownExpanded" class="pi pi-chevron-up"></i>
+          </ng-template>
+        </p-dropdown>
+
+        <label>Category</label>
+      </p-floatLabel>
+      <small id="category-help">
+        <span
+          *ngIf="
+            !taskForm.get('category')?.valid && taskForm.get('category')?.dirty
+          "
+          >Select a category.</span
+        >
+      </small>
+    </div>
+    <div class="flex flex-column gap-2">
+      <p-floatLabel>
+        <p-chips
+          formControlName="subtasks"
+          class="max-w-max"
+          [max]="5"
+          pTooltip='Type in your subtasks and press "Enter" (Max. 5).'
+          tooltipPosition="top"
+        />
+        <label>Subtasks</label>
+      </p-floatLabel>
+    </div>
+    <div
+      *ngIf="!editMode"
+      class="flex sm:justify-content-between justify-content-center gap-4 mt-4 grid"
+    >
+      <p-button
+        label="Clear"
+        [outlined]="true"
+        severity="danger"
+        type="button"
+        icon="pi pi-times"
+        class="custom-button-width"
+        (onClick)="onClear()"
+      />
+      <p-button
+        label="Add"
+        icon="pi pi-check"
+        type="Submit"
+        [disabled]="!taskForm.valid"
+        (onClick)="onSubmit()"
+      />
+    </div>
+    <div
+      *ngIf="editMode"
+      class="flex sm:justify-content-between justify-content-center gap-4 mt-4 grid"
+    >
+      <p-button
+        label="Cancel"
+        [outlined]="true"
+        severity="danger"
+        type="button"
+        icon="pi pi-times"
+        class="custom-button-width"
+        (onClick)="onCancel()"
+      />
+      <p-button
+        label="Save"
+        icon="pi pi-check"
+        type="Submit"
+        [disabled]="!taskForm.valid"
+        (onClick)="onSubmit()"
+      />
+    </div>
+  </div>
+</form>

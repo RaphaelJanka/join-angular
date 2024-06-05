@@ -47,6 +47,7 @@ export class AuthService {
     private storageService: StorageService,
     private ngZone: NgZone
   ) {}
+  
 
   signUp(email: string, password: string, name: string) {
     return this.http
@@ -151,6 +152,7 @@ export class AuthService {
   loadUsers(authToken: string | null) {
     return this.http.get<User[]>(this.userUrl + authToken).pipe(
       map((users) => {
+        this.users = [];
         const userArray = Object.values(users);
         this.users.push(...userArray);
       })

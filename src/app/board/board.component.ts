@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../login/auth.service';
 import { TaskService } from '../add-task/task.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, Subscription, take } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
 import { Task } from '../add-task/task.model';
-import { Category } from '../add-task/add-task.component';
+import { Category } from '../shared/task-form/task-form.component';
 
 interface BoardColumns {
   name: string;
@@ -27,38 +27,78 @@ export class BoardComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   draggedTask: Task | undefined | null;
   taskSubscription: Subscription | undefined;
+  updatedTaskSubscription: Subscription | undefined;
   visible: boolean = false;
+  isDialogAddTaskVisible: boolean = false;
   selectedTask = new BehaviorSubject<Task | null>(null);
   selectedTaskCategory!: Category;
+  dropChangeSubscription!: Subscription;
 
   constructor(
     private authService: AuthService,
     private taskService: TaskService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  
+  ngOnInit() {
     this.authService.authenticatedUser.pipe(take(1)).subscribe((user) => {
       if (user) {
         this.taskService.authUser = user;
-        this.taskSubscription = this.taskService
-          .fetchAllTasks(user)
-          ?.subscribe((tasks) => {
-            if (tasks) {
-              const taskArray = Object.values(tasks);
-              taskArray.forEach((task) => {
-                const column = this.boardColumns.find(
-                  (column) => column.id === task.columnId
-                );
-                if (column) {
-                  column.tasks.push(task);
-                }
-              });
-            }
-          });
+        this.loadAllTasks();
       }
     });
+    this.updatedTaskSubscription = this.taskService.isUpdated.subscribe(
+      (updated) => {
+        if (updated) {
+          this.loadAllTasks();
+          this.visible = false;
+          this.taskService.isUpdated.next(false);
+          this.isDialogAddTaskVisible = false;
+        }
+      }
+    );
+  }
+
+
+  loadAllTasks() {
+    this.taskSubscription = this.taskService
+      .fetchAllTasks()
+      ?.subscribe((tasks) => {
+        if (tasks) {
+          this.resetColumns();
+          this.loadColumns(tasks);
+        }
+      });
+  }
+
+
+  resetColumns() {
+    this.boardColumns.forEach((column) => {
+      column.tasks = [];
+    });
+  }
+
+
+  loadColumns(tasks: Task[]) {
+    const taskArray = Object.values(tasks);
+    taskArray.forEach((task) => {
+      const column = this.boardColumns.find(
+        (column) => column.id === task.columnId
+      );
+      if (column) {
+        column.tasks.push(task);
+      }
+    });
+    this.boardColumns.forEach((column) => {
+      this.sortColumns(column);
+    });
+  }
+
+  sortColumns(column: BoardColumns) {
+    column.tasks.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
   }
 
   dragStart(task: Task) {
@@ -74,17 +114,18 @@ export class BoardComponent implements OnInit, OnDestroy {
       if (column) {
         this.draggedTask.columnId = column.id;
         column.tasks.push(this.draggedTask);
-        this.taskService.updateTask(
-          this.draggedTask,
-          this.draggedTask.id,
-          this.taskService.authUser.token
-        );
+        this.sortColumns(column);
+        this.dropChangeSubscription = this.taskService.updateTask(this.draggedTask).subscribe();
       }
     }
   }
 
   dragEnd() {
     this.draggedTask = null;
+  }
+
+  showDialogAddTask() {
+    this.isDialogAddTaskVisible = true;
   }
 
   showDialog(task: Task) {
@@ -97,17 +138,20 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.visible = true;
   }
 
+  closeDialog(dialog: string) {
+    if (dialog === 'detail') {
+      this.taskService.setIsEdited(false);
+      this.taskService.selectedTask.next(null);
+      this.router.navigate(['/board']);
+    }
+    if (dialog === 'addTask') {
+      this.isDialogAddTaskVisible = false;
+    }
+  }
+
   ngOnDestroy(): void {
     this.taskSubscription?.unsubscribe();
-  }
-
-  closeDialog() {
-    this.taskService.setIsEdited(false);
-    this.removeIdFromRoute();
-  }
-
-  private removeIdFromRoute() {
-    const urlWithoutId = this.router.url.split('/')[1];
-    history.replaceState({}, '', `/${urlWithoutId}`);
+    this.updatedTaskSubscription?.unsubscribe();
+    this.dropChangeSubscription?.unsubscribe();
   }
 }

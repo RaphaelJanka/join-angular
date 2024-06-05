@@ -11,21 +11,31 @@ import { authGuard } from './login/auth.guard';
 import { TaskDetailsComponent } from './board/task-details/task-details.component';
 import { TaskEditComponent } from './board/task-edit/task-edit.component';
 
-
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'summary', component: SummaryComponent, canActivate: [authGuard] },
   { path: 'addTask', component: AddTaskComponent, canActivate: [authGuard] },
-  { path: 'board', component: BoardComponent, canActivate: [authGuard],
+  {
+    path: 'board',
+    component: BoardComponent,
+    canActivate: [authGuard],
     children: [
-      { path: ':id', component: TaskDetailsComponent, canActivate: [authGuard] },
-      { path: ':id/edit', component: TaskEditComponent, canActivate: [authGuard] }
-    ]
-   },
+      {
+        path: ':id',
+        component: TaskDetailsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: ':id/edit',
+        component: TaskEditComponent,
+        canActivate: [authGuard],
+      },
+    ],
+  },
   { path: 'contacts', component: ContactsComponent, canActivate: [authGuard] },
-  { path: '**', component: PageNotFoundComponent }
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

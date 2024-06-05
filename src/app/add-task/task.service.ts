@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../login/user.model';
 import { Task } from './task.model';
 import { BehaviorSubject, Subject, take } from 'rxjs';
-import { Router } from '@angular/router';
-import { EventEmitter } from 'node:stream';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +17,13 @@ export class TaskService {
   private isEditedSubject = new Subject<boolean>();
   isEdited$ = this.isEditedSubject.asObservable();
   selectedTask = new BehaviorSubject<Task | null>(null);
+  selectedSubtasks = new BehaviorSubject<{title: string, checked: boolean}[]>([]);
+  isUpdated = new Subject<boolean>();
 
   constructor(
     private authService: AuthService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) {}
 
   addTask(task: Task) {
@@ -35,17 +36,22 @@ export class TaskService {
         .subscribe((responseData) => {
           const taskId = responseData.name;
           task.id = taskId;
-          this.updateTask(task, taskId, user.token);
+          this.updateTaskId(task, taskId, user.token);
         });
     });
   }
+  
 
-  updateTask(task: Task, taskId: string, authToken: string | null) {
+  updateTaskId(task: Task, taskId: string, authToken: string | null) {
     const url = `${this.taskUrl}/${taskId}.json?auth=${authToken}`;
     this.http.put(url, task).subscribe({
       next: () => {
-        console.log('Task updated successfully');
-        this.router.navigate(['/board']);
+        if (this.router.url === '/board') {
+          this.isUpdated.next(true);
+        } else {
+          this.router.navigate(['/board']);
+        }
+       
       },
       error: (error) => {
         console.error('Error updating task:', error);
@@ -53,15 +59,28 @@ export class TaskService {
     });
   }
 
-  fetchAllTasks(user: User | null) {
-    if (!user) {
+
+  updateTask(editedTask: Task) {
+    const url = `${this.taskUrl}/${editedTask.id}.json?auth=${this.authUser.token}`;
+    return this.http.put(url, editedTask);
+  }
+
+
+  fetchAllTasks() {
+    if (!this.authUser) {
       return;
     }
-    return this.http.get<Task[]>(this.taskUrl + '.json?auth=' + user.token);
+    return this.http.get<Task[]>(
+      this.taskUrl + '.json?auth=' + this.authUser.token
+    );
   }
 
 
   setIsEdited(value: boolean) {
     this.isEditedSubject.next(value);
+  }
+
+  setSelectedSubtasks(subtasks: {title:string, checked: boolean}[]) {
+    this.selectedSubtasks.next(subtasks);
   }
 }

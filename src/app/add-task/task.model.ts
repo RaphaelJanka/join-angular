@@ -1,5 +1,6 @@
 import { User } from "../login/user.model";
-import { Category } from "./add-task.component";
+import { Category } from "../shared/task-form/task-form.component";
+
 
 export class Task {
   constructor(
@@ -9,9 +10,8 @@ export class Task {
     public date: Date,
     public priority: string,
     public category: Category,
-    public subtasks: string[] | null,
-    public creationTime: Date,
+    public subtasks: { title: string, checked: boolean }[] | null,
     public columnId: string,
-    public id: string
+    public id: string,
   ) {}
 }

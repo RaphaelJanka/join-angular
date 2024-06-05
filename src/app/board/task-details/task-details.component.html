@@ -6,21 +6,21 @@
     <div class="flex">
       <span>Priority:</span>
       <div
-        *ngIf="task.priority === 'urgent'"
+        *ngIf="task.priority === 'Urgent'"
         class="flex align-items-center gap-1"
       >
         <i class="pi pi-angle-double-up" style="color: #ff3d00"></i>
         <span>{{ task.priority }}</span>
       </div>
       <div
-        *ngIf="task.priority === 'medium'"
+        *ngIf="task.priority === 'Medium'"
         class="flex align-items-center gap-1"
       >
-        <i class="pi pi-equal" style="color: #ffa800"></i>
+        <i class="pi pi-equals" style="color: #ffa800"></i>
         <span>{{ task.priority }}</span>
       </div>
       <div
-        *ngIf="task.priority === 'low'"
+        *ngIf="task.priority === 'Low'"
         class="flex align-items-center gap-1"
       >
         <i class="pi pi-angle-double-down" style="color: #7ae229"></i>
@@ -48,10 +48,12 @@
     <div class="flex flex-column gap-2">
       <div *ngFor="let subtask of task.subtasks" class="field-checkbox">
         <p-checkbox
-          [(ngModel)]="checkedSubtasks"
           name="group"
-          [label]="subtask"
+          [label]="subtask.title"
           [value]="subtask"
+          [(ngModel)]="subtask.checked"
+          (ngModelChange)="updateSubtask(subtask)"
+          binary="true"
         />
       </div>
     </div>

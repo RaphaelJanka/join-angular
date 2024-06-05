@@ -10,12 +10,11 @@
 
   <h3 class="m-0 task-title">{{ task.title }}</h3>
   <span>{{ task.description }}</span>
-  <div class="flex align-items-center gap-3 text-xs">
-    <span>0 / {{ task.subtasks?.length }}</span>
-    <div class="card pBar-width">
-      <p-progressBar [style]="{ height: '10px' }" [value]="50">
+  <div *ngIf="task.subtasks && task.subtasks.length > 0" class="flex align-items-center gap-3 text-xs">
+    <div class="card w-full">
+      <p-progressBar [style]="{ height: '10px' }" [value]="getProgressBarValue()">
         <ng-template pTemplate="content" let-value>
-          <span class="text-xs">{{ value }}/{{ task.subtasks?.length }}</span>
+          <span class="text-xs">{{ getCheckedSubtasksCount() }}/{{ task.subtasks.length }}</span>
         </ng-template>
       </p-progressBar>
     </div>
@@ -51,19 +50,19 @@
       </ng-container>
     </p-avatarGroup>
     <p-avatar
-      *ngIf="task.priority === 'urgent'"
+      *ngIf="task.priority === 'Urgent'"
       icon="pi pi-angle-double-up"
       shape="circle"
       [style]="{ 'background-color': '#ff3d00', color: 'white' }"
     />
     <p-avatar
-      *ngIf="task.priority === 'medium'"
-      icon="pi pi-equal"
+      *ngIf="task.priority === 'Medium'"
+      icon="pi pi-equals"
       shape="circle"
       [style]="{ 'background-color': '#ffa800', color: 'white' }"
     />
     <p-avatar
-      *ngIf="task.priority === 'low'"
+      *ngIf="task.priority === 'Low'"
       icon="pi pi-angle-double-down"
       shape="circle"
       [style]="{ 'background-color': '#7ae229', color: 'white' }"
